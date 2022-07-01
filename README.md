@@ -1,6 +1,6 @@
 # Hotline to IRC bridge
 
-The Hotline to IRC bridge is based on hotline-irc-bridge that can be found here: https://gitlab.com/hlborg/hotline-irc-bridge.
+The Hotline to IRC bridge is based on hotline-irc-bridge found here: https://gitlab.com/hlborg/hotline-irc-bridge.
 Support to encode chats from MacRoman to UTF-8 has been added so non-english characters display like they should on IRC and Discord, otherwise it's more or less the same code as the project it's based on.
 
 # Perl Module Dependencies for Hotline to IRC bridge
