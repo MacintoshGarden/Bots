@@ -1,0 +1,33 @@
+[irc]
+    [irc.libera]
+#    Charset="utf-8"
+    Server="irc.libera.chat:6667"
+    Nick="Discoline"
+    Password="somepassword"
+    UseRelayMsg=true
+    RemoteNickFormat="{NICK}: "
+    ExtractNicks=[ [ "SpeakerBot", "(.*?):\\s+" ] ]
+
+[discord]
+    [discord.macgarden]
+    Token="here_be_token"
+    Server="441926336605585408"
+    RemoteNickFormat="{NICK}"
+    UseUserName=false
+    UseLocalAvatar=["irc"]
+
+[[gateway]]
+name="System7Today"
+enable=true
+
+    [[gateway.inout]]
+    account="irc.libera"
+    channel="#system7today"
+
+
+    [[gateway.inout]]
+    account = "discord.macgarden"
+    channel= "📰hotline"
+
+	[gateway.inout.options]
+	WebhookURL="here_be_webhooks"

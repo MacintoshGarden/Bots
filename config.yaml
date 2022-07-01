@@ -1,0 +1,30 @@
+---
+hotline:
+    listener:
+        nick: ListenerBot
+        server: localhost
+        login: guest
+        password:
+        icon: 411
+    speaker:
+        nick: SpeakerBot
+        server: localhost
+        login: guest
+        password:
+        icon: 411
+irc:
+    listener:
+        nick: ListenerBot
+        server: irc.libera.chat
+        port: 6667
+        password:
+        channel: "#system7today"
+    speaker:
+        nick: SpeakerBot
+        server: irc.libera.chat
+        port: 6667
+        password:
+        channel: "#system7today"
+ignoreNick:
+    - ListenerBot
+    - SpeakerBot
