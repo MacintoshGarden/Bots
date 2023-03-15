@@ -22,4 +22,7 @@ Support to encode chats from MacRoman to UTF-8 has been added so non-english cha
 Matterbridge is used to bridge IRC to Discord, which effectively brings Hotline to Discord.
 The configuration file found in this repository is what we use for our implementation.
 
+The Discord side of the bridge is configured using this guide:
+https://github.com/42wim/matterbridge/wiki/Section-Discord-(basic)
+
 Sensitive data have been removed and placeholder text have been added in it's place.
