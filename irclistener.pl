@@ -20,6 +20,7 @@ my $port;
 my $password;
 my $channel;
 my $safenick;
+my $bridgenick;
 my $socketpaddr;
 my $bot;
 
@@ -44,6 +45,7 @@ sub Load_Config {
     $password = $config->{irc}->{listener}->{password};
     $channel = $config->{irc}->{listener}->{channel};
     $safenick = $config->{ignoreNick};
+    $bridgenick = $config->{BridgeBotNick};
 
     return;
 
@@ -110,83 +112,16 @@ sub said {
     my $msg;
 
     	if ($who eq "Discoline") {
-	$msg = $body; # Compose msg without Discord bot name
+	$msg = $body; # Compose msg without brigde nick bot name
 	}
 	else {
 	$msg = $who.": ".$body; # Compose msg
 	}
 
-    Write_Userlist($self);
-
-    if(Is_Safe($who))
-    {
-        if($body eq "!userlist") {
-            Get_Userlist($self, $who);
-        }
-        else {
-            Send_to_Hotline($msg);
-        }
-    }
-
-    return;
-
-}
-
-sub chanjoin {
-
-    my $self = shift;
-    my $message = shift;
-
-    Write_Userlist($self);
-
-    my $who = $message->{who};
-    my $msg = "** ".$who." has joined IRC **"; # Compose msg
-
-    Send_to_Hotline($msg);
-
-    return;
-
-}
-
-sub chanpart {
-
-    my $self = shift;
-    my $message = shift;
-
-    Write_Userlist($self);
-
-    my $who = $message->{who};
-    my $msg = "** ".$who." has left IRC **"; # Compose msg
-
-    Send_to_Hotline($msg);
-
-    return;
-}
-
-sub userquit {
-
-    my $self = shift;
-    my $message = shift;
-
-    Write_Userlist($self);
-
-    my $who = $message->{who};
-    my $msg = "** ".$who." has left IRC **"; # Compose msg
-
-
-    Send_to_Hotline($msg);
-
-    return;
-
-}
-
-sub nick_change {
-
-    my($self, $old_nick, $new_nick) = @_;
-
-    Write_Userlist($self);
-
-    Send_to_Hotline("** $old_nick changed his name to $new_nick **");
+	if(Is_Safe($who))
+	{
+	Send_to_Hotline($msg);
+	}
 
     return;
 
@@ -210,36 +145,4 @@ sub Send_to_Hotline {
 
     return;
 
-}
-
-sub Get_Userlist {
-
-    my ($self, $who) = @_;
-    my $userlist = LoadFile('hl_userlist.yaml');
-    my $msg = "Hotline Userlist: ";
-    for my $user (@{$userlist}) {
-        $msg = $msg . $user . ", ";
-    }
-    $self->say(channel => $channel, body => substr($msg, 0, -2));
-
-    return;
-
-}
-
-sub Write_Userlist {
-
-    my $self = shift;
-    my %userlist = %{$self->channel_data($channel)};
-    my $nickname;
-    my $userlist;
-
-    for(keys %userlist) {
-        if(Is_Safe($_))
-        {
-            push @$userlist, $_;
-        }
-    }
-    DumpFile( "irc_userlist.yaml", $userlist );
-
-    return;
 }

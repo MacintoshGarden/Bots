@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 # Filename : hotlinelistener.pl
 # Bot that watches Hotline chat and sends messages to IRCspeaker bot
+# Idiotic changes made by Theo Knez for Macintosh Garden & System 7 Today
 
 use warnings;
 use strict;
@@ -76,9 +77,6 @@ sub Set_Handlers {
     my($bot) = @_;
     $bot->chat_handler(\&Chat_Handler);
     $bot->msg_handler(\&Msg_Handler);
-    $bot->join_handler(\&Join_Handler);
-    $bot->leave_handler(\&Leave_Handler);
-    $bot->nick_handler(\&Nick_Handler);
 
     return;
 
@@ -105,62 +103,10 @@ sub Chat_Handler {
     my($who, $message) = split /:  /, $$msg_ref, 2;
     $who =~ s/^[^\pL]+//;
 
-    if($message eq "userlist")
-    {
-        Refresh_Userlist($bot);
+	if(Is_Safe($who)) {
+	Send_to_IRC($bot, "$who: $message");	
+	}
     }
-    elsif(Is_Safe($who))
-    {
-        if($message eq "!userlist") {
-            Get_Userlist($bot, $who);
-        }
-        else {
-            Send_to_IRC($bot, "$who: $message");
-        }
-    }
-
-sub Refresh_Userlist
-{
-    my($bot) = @_;
-    my $userlist = $bot->get_userlist();
-    print Dumper($userlist);
-
-}
-
-    return;
-}
-
-
-sub Join_Handler {
-
-    my($bot, $user) = @_;
-    my($nick) = $user->nick();
-    my($socket) = $user->socket();
-#    Send_to_IRC($bot, "** $nick has joined Hotline **");
-    Write_Userlist($bot);
-
-    return;
-}
-
-sub Leave_Handler {
-
-    my($bot, $user) = @_;
-    my($nick) = $user->nick();
-    my($socket) = $user->socket();
-#    Send_to_IRC($bot, "** $nick has left Hotline **");
-    Write_Userlist($bot);
-
-    return;
-}
-
-sub Nick_Handler {
-
-    my($bot, $user, $old_nick, $new_nick) = @_;
-#    Send_to_IRC($bot, 0, "** $old_nick changed his name to $new_nick **");
-    Write_Userlist($bot);
-
-    return;
-}
 
 sub Send_to_IRC {
 
@@ -171,46 +117,9 @@ sub Send_to_IRC {
     socket($sock, AF_INET, SOCK_STREAM, $proto) or die $!;
     connect($sock , $socketpaddr) or die "connect failed : $!";
 
-#    my $encmsg = encode("utf-8", $msg);
-    from_to($msg, "macroman", "latin1");
+    from_to($msg, "MacRoman", "latin1");
     send($sock , "$msg" , 0);
     close($sock);
-
-    return;
-}
-
-sub Write_Userlist {
-
-    my($bot) = @_;
-
-    $bot->req_userlist();
-    my %userlist = %{$bot->userlist()};
-    my $nickname;
-    my $userlist;
-
-    for(keys %userlist){
-        $nickname = $userlist { $_ }->{ NICK };
-        if(Is_Safe($nickname))
-            {
-                push @$userlist, $nickname;
-            }
-    }
-
-    DumpFile( "hl_userlist.yaml", $userlist );
-
-    return;
-}
-
-sub Get_Userlist {
-    my ($self, $who) = @_;
-    my $userlist = LoadFile('irc_userlist.yaml');
-    my $msg = "IRC Userlist: ";
-
-    for my $user (@{$userlist}) {
-        $msg = $msg . $user . ", ";
-    }
-
-    $self->chat(substr($msg, 0, -2));
 
     return;
 }
