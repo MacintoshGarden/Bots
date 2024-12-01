@@ -101,6 +101,8 @@ sub Chat_Handler {
 
     my($bot, $msg_ref) = @_;
     my($who, $message) = split /:  /, $$msg_ref, 2;
+    # Hide words starting with "@" in the message
+    $message =~ s/\@\w+//g; 
     $who =~ s/^[^\pL]+//;
 
 	if(Is_Safe($who)) {
