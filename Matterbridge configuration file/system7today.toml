@@ -1,12 +1,13 @@
 [irc]
     [irc.libera]
-#    Charset="utf-8"
+    Charset="utf-8"
     Server="irc.libera.chat:6667"
     Nick="Discoline"
     Password="somepassword"
     UseRelayMsg=true
     RemoteNickFormat="{NICK}: "
     ExtractNicks=[ [ "SpeakerBot", "(.*?):\\s+" ] ]
+    ReplaceMessages=[ [ "@everyone", "everyone" ], [ "@here", "here" ] ]
 
 [discord]
     [discord.macgarden]
@@ -15,6 +16,7 @@
     RemoteNickFormat="{NICK}"
     UseUserName=false
     UseLocalAvatar=["irc"]
+    ReplaceMessages=[ [ "@everyone", "everyone" ], [ "@here", "here" ] ]
 
 [[gateway]]
 name="System7Today"
