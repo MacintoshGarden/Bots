@@ -14,6 +14,14 @@ Support to encode chats from MacRoman to UTF-8 has been added so non-english cha
 - POE
 - IPC::System::Simple
 
+Easy Process:
+(Its recommended to install CPANM)
+
+  cpan App::cpanminus
+
+Once that's installed run this: (use sudo if on mac/unix/linux and not wanting to do local/limited installs)
+  cpanm Bot::BasicBot Net::Hotline::Client YAML::XS Socket IO::Filename utf8 POE IPC::System::Simple
+
 # Commands
 
 - **!userlist** results in the userlist from Hotline or IRC being posted to main chat
