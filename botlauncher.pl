@@ -10,7 +10,7 @@ MAIN:
 {
     system("perl hotlinelistener.pl &");
     system("perl ircspeaker.pl &");
-    system("sleep 3");
+    sleep(3);
     system("perl irclistener.pl &");
     system("perl hotlinespeaker.pl &");
 }
