@@ -1,7 +1,7 @@
 # Hotline to IRC bridge
 
 The Hotline to IRC bridge is based on hotline-irc-bridge found here: https://gitlab.com/hlborg/hotline-irc-bridge.
-Support to encode chats from MacRoman to UTF-8 has been added so non-english characters display like they should on IRC and Discord, otherwise it's more or less the same code as the project it's based on.
+Our modifications add support for UTF-8 to MacRoman and MacRoman to UTF-8 encoding as well as support for "another bot" to be able to bridge to Discord and other chat systems in an easier and more aestatically pleasing way. Some bugs have been fixed as well.
 
 # Perl Module Dependencies & Installation
 
@@ -20,6 +20,7 @@ Install cpanminus:
 ```
   cpan App::cpanminus
 ```
+
 Once cpanminus is installed, install the Hotline to IRC bridge dependencies:
 ```
   cpanm Bot::BasicBot Net::Hotline::Client YAML::XS Socket IO::Filename utf8 POE IPC::System::Simple
