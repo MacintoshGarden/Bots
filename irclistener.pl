@@ -111,7 +111,7 @@ sub said {
     my $who = $message->{who}; # Get nick of user
     my $msg;
 
-    	if ($who eq "Discoline") {
+    	if ($who eq $bridgenick) {
 	$msg = $body; # Compose msg without brigde nick bot name
 	}
 	else {
