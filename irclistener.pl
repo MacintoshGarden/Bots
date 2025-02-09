@@ -45,7 +45,7 @@ sub Load_Config {
     $password = $config->{irc}->{listener}->{password};
     $channel = $config->{irc}->{listener}->{channel};
     $safenick = $config->{ignoreNick};
-    $bridgenick = $config->{BridgeBotNick};
+    $bridgenick = $config->{BridgeBotNick}[0];
 
     return;
 
