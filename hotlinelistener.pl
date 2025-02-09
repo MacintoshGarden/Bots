@@ -101,7 +101,7 @@ sub Chat_Handler {
 
     my($bot, $msg_ref) = @_;
     my($who, $message) = split /:  /, $$msg_ref, 2;
-    $who =~ s/^[^\pL]+//;
+    $who =~ s/^[^\pL|0-9]+//;
 
 	if(Is_Safe($who)) {
 	Send_to_IRC($bot, "$who: $message");	
